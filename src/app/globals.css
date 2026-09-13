@@ -185,6 +185,155 @@ input {
   animation: shake 0.35s ease-in-out;
 }
 
+.profile-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 32px 20px;
+  background:
+    radial-gradient(circle at 12% 18%, #fff6cf 0 7%, transparent 28%),
+    radial-gradient(circle at 90% 82%, #c4dfc1 0 9%, transparent 30%), #e8f1df;
+}
+.profile-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.28;
+  background-image: radial-gradient(#719975 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.profile-page__leaf {
+  position: absolute;
+  width: 110px;
+  height: 54px;
+  border: 2px solid rgba(77, 122, 92, 0.18);
+  border-radius: 100% 0 100% 0;
+  transform: rotate(-26deg);
+}
+.profile-page__leaf--one {
+  left: 8%;
+  bottom: 15%;
+}
+.profile-page__leaf--two {
+  right: 7%;
+  top: 16%;
+  transform: rotate(148deg) scale(0.72);
+}
+.profile-card {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 390px);
+  padding: 32px 30px 26px;
+  text-align: center;
+  background: rgba(255, 253, 246, 0.94);
+  border: 2px solid rgba(64, 105, 75, 0.14);
+  border-radius: 28px;
+  box-shadow:
+    0 18px 0 rgba(79, 121, 89, 0.1),
+    0 22px 46px rgba(65, 90, 65, 0.14);
+  animation: profile-arrive 0.55s ease-out both;
+}
+.profile-card__eyebrow {
+  margin: 0 0 20px;
+  color: #d98751;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.17em;
+}
+.profile-card__avatar {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 18px;
+  color: #fffdf6;
+  background: #4f7d5d;
+  border: 5px solid #d9e9d2;
+  border-radius: 50%;
+  box-shadow: 0 5px 0 #c1d8be;
+  font-family: Georgia, serif;
+  font-size: 30px;
+  font-weight: 700;
+}
+.profile-card__kicker {
+  margin: 0 0 7px;
+  color: #829686;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.profile-card h1 {
+  margin: 0;
+  color: #394e42;
+  font-family: Georgia, serif;
+  font-size: 32px;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+.profile-card__error {
+  margin: 18px 0 0;
+  color: #ab6043;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.profile-detail {
+  margin-top: 25px;
+  border-top: 1px solid #e1eadb;
+  border-bottom: 1px solid #e1eadb;
+}
+.profile-detail__toggle,
+.profile-card__logout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border: 0;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 800;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease;
+}
+.profile-detail__toggle {
+  padding: 14px 2px;
+  color: #4f7d5d;
+  background: transparent;
+}
+.profile-detail__toggle:hover {
+  color: #be7042;
+}
+.profile-detail__toggle:active,
+.profile-card__logout:active {
+  transform: translateY(2px);
+}
+.profile-detail__email {
+  margin: -1px 0 14px;
+  padding: 12px 10px;
+  color: #55715d;
+  background: #f4f8ee;
+  border-radius: 10px;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+  animation: detail-reveal 0.24s ease-out both;
+}
+.profile-card__logout {
+  margin-top: 22px;
+  padding: 13px 16px;
+  color: #fffdf6;
+  background: #d97845;
+  border-radius: 13px;
+  box-shadow: 0 4px 0 #b7623a;
+}
+.profile-card__logout:hover {
+  background: #c86b3e;
+  transform: translateY(-1px);
+}
+
 .mascot {
   width: 176px;
   height: 152px;
@@ -193,15 +342,15 @@ input {
   left: calc(50% - 88px);
 }
 .mascot--happy {
-  animation: bob 1.6s ease-in-out infinite;
+  animation: bob 0.85s cubic-bezier(0.22, 0.8, 0.32, 1) 1 both;
 }
 .mascot__head {
   position: absolute;
   z-index: 2;
-  width: 136px;
-  height: 104px;
-  left: 20px;
-  top: 31px;
+  width: 148px;
+  height: 112px;
+  left: 14px;
+  top: 27px;
   background: #d97845;
   border: 5px solid #3d5844;
   border-radius: 48% 48% 46% 46%;
@@ -209,9 +358,9 @@ input {
 }
 .mascot__forehead {
   position: absolute;
-  width: 82px;
-  height: 57px;
-  left: 22px;
+  width: 91px;
+  height: 62px;
+  left: 25px;
   top: -12px;
   background: #f4b673;
   border-radius: 50%;
@@ -219,52 +368,52 @@ input {
 .mascot__ear {
   position: absolute;
   z-index: 1;
-  top: 3px;
-  width: 61px;
-  height: 72px;
+  top: 1px;
+  width: 66px;
+  height: 82px;
   background: #d97845;
   border: 5px solid #3d5844;
   border-radius: 12px 52px 15px 52px;
 }
 .mascot__ear i {
   display: block;
-  width: 27px;
-  height: 37px;
+  width: 30px;
+  height: 45px;
   margin: 11px;
   background: #f3b3a2;
   border-radius: 7px 28px 7px 28px;
 }
 .mascot__ear--left {
-  left: 22px;
+  left: 17px;
   transform: rotate(-21deg);
 }
 .mascot__ear--right {
-  right: 22px;
+  right: 17px;
   transform: scaleX(-1) rotate(-21deg);
 }
 .mascot__eye {
   position: absolute;
   z-index: 3;
-  top: 31px;
-  width: 40px;
-  height: 41px;
+  top: 34px;
+  width: 43px;
+  height: 46px;
   background: #fffdf5;
   border: 4px solid #3d5844;
   border-radius: 50%;
   overflow: hidden;
 }
 .mascot__eye--left {
-  left: 22px;
+  left: 24px;
 }
 .mascot__eye--right {
-  right: 22px;
+  right: 24px;
 }
 .mascot__eye span {
   position: absolute;
-  width: 15px;
-  height: 18px;
-  left: 9px;
-  top: 10px;
+  width: 16px;
+  height: 21px;
+  left: 10px;
+  top: 11px;
   border-radius: 50%;
   background: #344338;
   transition: transform 0.1s linear;
@@ -280,7 +429,7 @@ input {
   top: 2px;
 }
 .mascot--shy .mascot__eye {
-  top: 43px;
+  top: 47px;
   height: 14px;
   background: transparent;
   border: 0;
@@ -294,10 +443,10 @@ input {
 .mascot__muzzle {
   position: absolute;
   z-index: 4;
-  width: 52px;
-  height: 38px;
-  left: 38px;
-  top: 63px;
+  width: 58px;
+  height: 42px;
+  left: 45px;
+  top: 68px;
   background: #fff0d6;
   border-radius: 45% 45% 48% 48%;
 }
@@ -307,16 +456,16 @@ input {
   height: 10px;
   position: absolute;
   background: #3d5844;
-  left: 20px;
+  left: 23px;
   top: 8px;
   border-radius: 50% 50% 55% 55%;
 }
 .mascot__mouth {
   position: absolute;
-  left: 19px;
-  top: 19px;
-  width: 15px;
-  height: 8px;
+  left: 21px;
+  top: 21px;
+  width: 17px;
+  height: 10px;
   border-bottom: 3px solid #3d5844;
   border-radius: 0 0 50% 50%;
 }
@@ -329,26 +478,26 @@ input {
 .mascot__cheek {
   position: absolute;
   z-index: 4;
-  top: 78px;
-  width: 17px;
+  top: 84px;
+  width: 19px;
   height: 8px;
   background: #e98c79;
   opacity: 0.7;
   border-radius: 50%;
 }
 .mascot__cheek--left {
-  left: 13px;
+  left: 15px;
 }
 .mascot__cheek--right {
-  right: 13px;
+  right: 15px;
 }
 .mascot__body {
   position: absolute;
   z-index: 1;
-  left: 43px;
+  left: 35px;
   bottom: 0;
-  width: 90px;
-  height: 49px;
+  width: 106px;
+  height: 58px;
   border: 5px solid #3d5844;
   background: #d97845;
   border-radius: 50% 50% 23px 23px;
@@ -356,20 +505,20 @@ input {
 .mascot__paw {
   position: absolute;
   z-index: 5;
-  top: 107px;
-  width: 33px;
-  height: 24px;
+  top: 108px;
+  width: 37px;
+  height: 27px;
   border: 4px solid #3d5844;
   background: #f4b673;
   border-radius: 48% 48% 42% 42%;
   transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
 }
 .mascot__paw--left {
-  left: 38px;
+  left: 28px;
   transform: rotate(8deg);
 }
 .mascot__paw--right {
-  right: 38px;
+  right: 28px;
   transform: rotate(-8deg);
 }
 .mascot__paw--left.mascot__paw--cover {
@@ -406,6 +555,26 @@ input {
     opacity: 0;
   }
 }
+@keyframes profile-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes detail-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 @media (max-width: 460px) {
   .auth-card {
     padding: 45px 25px 28px;
@@ -416,6 +585,9 @@ input {
   }
   .auth-wrap {
     padding-top: 104px;
+  }
+  .profile-card {
+    padding-inline: 24px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
