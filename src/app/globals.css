@@ -66,6 +66,8 @@ input {
   padding-top: 112px;
 }
 .auth-card {
+  position: relative;
+  z-index: 2;
   background: rgba(255, 253, 246, 0.94);
   border: 2px solid rgba(64, 105, 75, 0.14);
   border-radius: 30px;
@@ -187,12 +189,8 @@ input {
   width: 176px;
   height: 152px;
   position: absolute;
-  z-index: 2;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  filter: drop-shadow(0 7px 0 rgba(59, 91, 64, 0.12));
-  transition: transform 0.2s ease;
+  left: calc(50% - 88px);
 }
 .mascot--happy {
   animation: bob 1.6s ease-in-out infinite;
@@ -280,6 +278,18 @@ input {
   border-radius: 50%;
   left: 3px;
   top: 2px;
+}
+.mascot--shy .mascot__eye {
+  top: 43px;
+  height: 14px;
+  background: transparent;
+  border: 0;
+  border-top: 4px solid #3d5844;
+  border-radius: 50% 50% 0 0;
+  overflow: visible;
+}
+.mascot--shy .mascot__eye span {
+  display: none;
 }
 .mascot__muzzle {
   position: absolute;
@@ -379,7 +389,7 @@ input {
 }
 @keyframes bob {
   50% {
-    transform: translateX(-50%) translateY(-5px) rotate(1deg);
+    top: -5px;
   }
 }
 @keyframes shake {
