@@ -1,26 +1,418 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink: #394e42;
+  --moss: #4d7a5c;
+  --cream: #fffdf6;
+  --peach: #f4a66d;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  color: var(--ink);
+  background: #e7f1df;
+  font-family: Arial, Helvetica, sans-serif;
+}
+button,
+input {
+  font: inherit;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  position: relative;
+  padding: 48px 20px;
+  background:
+    radial-gradient(circle at 15% 18%, #fff9d5 0 8%, transparent 26%),
+    radial-gradient(circle at 88% 79%, #c7e3c6 0 8%, transparent 27%), #e8f1df;
+}
+.auth-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.3;
+  background-image: radial-gradient(#719975 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.auth-page__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(1px);
+  opacity: 0.75;
+}
+.auth-page__orb--one {
+  width: 90px;
+  height: 90px;
+  background: #f5bd80;
+  left: 9%;
+  bottom: 14%;
+}
+.auth-page__orb--two {
+  width: 52px;
+  height: 52px;
+  background: #98c9ac;
+  right: 13%;
+  top: 16%;
+}
+.auth-wrap {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 420px);
+  padding-top: 112px;
+}
+.auth-card {
+  background: rgba(255, 253, 246, 0.94);
+  border: 2px solid rgba(64, 105, 75, 0.14);
+  border-radius: 30px;
+  padding: 48px 38px 32px;
+  box-shadow:
+    0 20px 0 rgba(79, 121, 89, 0.1),
+    0 22px 46px rgba(65, 90, 65, 0.14);
+}
+.auth-card__heading {
+  text-align: center;
+  margin-bottom: 27px;
+}
+.auth-card__eyebrow {
+  margin: 0 0 7px;
+  color: #d98751;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.17em;
+}
+.auth-card h1 {
+  font-family: Georgia, serif;
+  font-weight: 700;
+  font-size: 31px;
+  letter-spacing: -0.04em;
+  margin: 0 0 7px;
+}
+.auth-card__heading > p:last-child {
+  color: #78907d;
+  font-size: 14px;
+  margin: 0;
+}
+.auth-form {
+  display: grid;
+  gap: 8px;
+}
+.auth-form label {
+  margin: 7px 0 0;
+  color: #55715d;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+.auth-form input {
+  width: 100%;
+  outline: none;
+  border: 1.5px solid #d6e1ce;
+  background: #f8faf3;
+  color: #3b5245;
+  border-radius: 13px;
+  padding: 13px 14px;
+  transition: 0.2s ease;
+}
+.auth-form input::placeholder {
+  color: #a5b5a8;
+}
+.auth-form input:focus {
+  border-color: #7da98a;
+  background: white;
+  box-shadow: 0 0 0 4px #dcebd9;
+  transform: translateY(-1px);
+}
+.auth-submit {
+  border: 0;
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-top: 16px;
+  color: white;
+  background: #4f7d5d;
+  box-shadow: 0 5px 0 #386446;
+  cursor: pointer;
+  font-weight: 800;
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease;
+}
+.auth-submit span {
+  margin-left: 9px;
+  font-size: 18px;
+}
+.auth-submit:hover:not(:disabled) {
+  background: #406e50;
+  transform: translateY(-2px);
+}
+.auth-submit:active:not(:disabled) {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 #386446;
+}
+.auth-submit:disabled {
+  cursor: not-allowed;
+  background: #a8bda8;
+  box-shadow: 0 5px 0 #91a991;
+}
+.auth-card__footer {
+  margin: 24px 0 0;
+  text-align: center;
+  color: #829686;
+  font-size: 12px;
+}
+.auth-card__footer a {
+  color: #be7042;
+  font-weight: 800;
+  text-decoration: none;
+}
+.auth-card__footer a:hover {
+  text-decoration: underline;
+}
+.auth-error {
+  margin: -9px 0 16px;
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: #fff0e9;
+  color: #ab6043;
+  font-size: 12px;
+  line-height: 1.35;
+  animation: shake 0.35s ease-in-out;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.mascot {
+  width: 176px;
+  height: 152px;
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 7px 0 rgba(59, 91, 64, 0.12));
+  transition: transform 0.2s ease;
+}
+.mascot--happy {
+  animation: bob 1.6s ease-in-out infinite;
+}
+.mascot__head {
+  position: absolute;
+  z-index: 2;
+  width: 136px;
+  height: 104px;
+  left: 20px;
+  top: 31px;
+  background: #d97845;
+  border: 5px solid #3d5844;
+  border-radius: 48% 48% 46% 46%;
+  overflow: hidden;
+}
+.mascot__forehead {
+  position: absolute;
+  width: 82px;
+  height: 57px;
+  left: 22px;
+  top: -12px;
+  background: #f4b673;
+  border-radius: 50%;
+}
+.mascot__ear {
+  position: absolute;
+  z-index: 1;
+  top: 3px;
+  width: 61px;
+  height: 72px;
+  background: #d97845;
+  border: 5px solid #3d5844;
+  border-radius: 12px 52px 15px 52px;
+}
+.mascot__ear i {
+  display: block;
+  width: 27px;
+  height: 37px;
+  margin: 11px;
+  background: #f3b3a2;
+  border-radius: 7px 28px 7px 28px;
+}
+.mascot__ear--left {
+  left: 22px;
+  transform: rotate(-21deg);
+}
+.mascot__ear--right {
+  right: 22px;
+  transform: scaleX(-1) rotate(-21deg);
+}
+.mascot__eye {
+  position: absolute;
+  z-index: 3;
+  top: 31px;
+  width: 40px;
+  height: 41px;
+  background: #fffdf5;
+  border: 4px solid #3d5844;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.mascot__eye--left {
+  left: 22px;
+}
+.mascot__eye--right {
+  right: 22px;
+}
+.mascot__eye span {
+  position: absolute;
+  width: 15px;
+  height: 18px;
+  left: 9px;
+  top: 10px;
+  border-radius: 50%;
+  background: #344338;
+  transition: transform 0.1s linear;
+}
+.mascot__eye span::after {
+  content: "";
+  position: absolute;
+  background: white;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  left: 3px;
+  top: 2px;
+}
+.mascot__muzzle {
+  position: absolute;
+  z-index: 4;
+  width: 52px;
+  height: 38px;
+  left: 38px;
+  top: 63px;
+  background: #fff0d6;
+  border-radius: 45% 45% 48% 48%;
+}
+.mascot__muzzle b {
+  display: block;
+  width: 13px;
+  height: 10px;
+  position: absolute;
+  background: #3d5844;
+  left: 20px;
+  top: 8px;
+  border-radius: 50% 50% 55% 55%;
+}
+.mascot__mouth {
+  position: absolute;
+  left: 19px;
+  top: 19px;
+  width: 15px;
+  height: 8px;
+  border-bottom: 3px solid #3d5844;
+  border-radius: 0 0 50% 50%;
+}
+.mascot__mouth--sad {
+  border-bottom: 0;
+  border-top: 3px solid #3d5844;
+  border-radius: 50% 50% 0 0;
+  top: 23px;
+}
+.mascot__cheek {
+  position: absolute;
+  z-index: 4;
+  top: 78px;
+  width: 17px;
+  height: 8px;
+  background: #e98c79;
+  opacity: 0.7;
+  border-radius: 50%;
+}
+.mascot__cheek--left {
+  left: 13px;
+}
+.mascot__cheek--right {
+  right: 13px;
+}
+.mascot__body {
+  position: absolute;
+  z-index: 1;
+  left: 43px;
+  bottom: 0;
+  width: 90px;
+  height: 49px;
+  border: 5px solid #3d5844;
+  background: #d97845;
+  border-radius: 50% 50% 23px 23px;
+}
+.mascot__paw {
+  position: absolute;
+  z-index: 5;
+  top: 107px;
+  width: 33px;
+  height: 24px;
+  border: 4px solid #3d5844;
+  background: #f4b673;
+  border-radius: 48% 48% 42% 42%;
+  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+.mascot__paw--left {
+  left: 38px;
+  transform: rotate(8deg);
+}
+.mascot__paw--right {
+  right: 38px;
+  transform: rotate(-8deg);
+}
+.mascot__paw--left.mascot__paw--cover {
+  transform: translate(17px, -45px) rotate(26deg);
+}
+.mascot__paw--right.mascot__paw--cover {
+  transform: translate(-17px, -45px) rotate(-26deg);
+}
+.mascot__tear {
+  position: absolute;
+  z-index: 7;
+  right: 24px;
+  top: 78px;
+  color: #69aace;
+  font-size: 18px;
+  animation: drop 0.8s ease-in infinite;
+}
+@keyframes bob {
+  50% {
+    transform: translateX(-50%) translateY(-5px) rotate(1deg);
   }
 }
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes shake {
+  25% {
+    transform: translateX(-3px);
+  }
+  75% {
+    transform: translateX(3px);
+  }
+}
+@keyframes drop {
+  to {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+}
+@media (max-width: 460px) {
+  .auth-card {
+    padding: 45px 25px 28px;
+    border-radius: 26px;
+  }
+  .auth-page {
+    padding-inline: 14px;
+  }
+  .auth-wrap {
+    padding-top: 104px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

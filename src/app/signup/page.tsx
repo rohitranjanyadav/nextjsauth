@@ -1,77 +1,40 @@
 "use client";
-import Link from "next/link";
+
 import React from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import AuthCard from "../components/AuthCard";
 
 export default function SignupPage() {
   const router = useRouter();
-  const [user, setUser] = React.useState({
-    email: "",
-    password: "",
-    username: "",
-  });
+  const [user, setUser] = React.useState({ username: "", email: "", password: "" });
   const [loading, setLoading] = React.useState(false);
-  const isFormValid =
-    user.email.length > 0 &&
-    user.password.length > 0 &&
-    user.username.length > 0;
+  const [activeField, setActiveField] = React.useState<"password" | null>(null);
+  const [error, setError] = React.useState("");
+  const isFormValid = Boolean(user.username && user.email && user.password);
+  const mood = error ? "sad" : activeField === "password" ? "shy" : user.username ? "happy" : "curious";
 
   const onSignup = async () => {
+    if (!isFormValid) return;
+    setError("");
     try {
       setLoading(true);
-      const response = await axios.post("/api/users/signup", user);
-
-      console.log("Signup success", response.data);
+      await axios.post("/api/users/signup", user);
       router.push("/login");
-    } catch (error: unknown) {
-      console.log(
-        "Signup failed",
-        error instanceof Error ? error.message : "Something went wrong",
-      );
-    } finally {
-      setLoading(false);
-    }
+    } catch {
+      setError("That trail is already taken. Try a different email or name.");
+    } finally { setLoading(false); }
   };
 
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <h1>{loading ? "Signing up..." : "Signup"}</h1>
-      <hr />
-      <label htmlFor="username">Username</label>
-      <input
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 "
-        type="text"
-        placeholder="Username"
-        value={user.username}
-        onChange={(e) => setUser({ ...user, username: e.target.value })}
-      />
-      <label htmlFor="email">Email</label>
-      <input
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 "
-        type="text"
-        placeholder="Email"
-        value={user.email}
-        onChange={(e) => setUser({ ...user, email: e.target.value })}
-      />
-      <label htmlFor="password">Password</label>
-      <input
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 "
-        type="password"
-        placeholder="Password"
-        value={user.password}
-        onChange={(e) => setUser({ ...user, password: e.target.value })}
-      />
-
-      <button
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
-        onClick={onSignup}
-        disabled={!isFormValid}
-      >
-        Signup
-      </button>
-
-      <Link href="/login">Already have an account? Click here to login.</Link>
-    </div>
-  );
+  return <AuthCard title="Join the woodland" subtitle="A cozy corner is waiting for you." mood={mood} error={error} footer={{ href: "/login", prompt: "Already have a den?", action: "Log in" }}>
+    <form className="auth-form" onSubmit={(event) => { event.preventDefault(); onSignup(); }}>
+      <label htmlFor="username">Your name</label>
+      <input id="username" type="text" autoComplete="username" placeholder="Clover" value={user.username} onChange={(e) => { setUser({ ...user, username: e.target.value }); setError(""); }} />
+      <label htmlFor="email">Email address</label>
+      <input id="email" type="email" autoComplete="email" placeholder="you@forest.com" value={user.email} onChange={(e) => { setUser({ ...user, email: e.target.value }); setError(""); }} />
+      <label htmlFor="password">Choose a password</label>
+      <input id="password" type="password" autoComplete="new-password" placeholder="••••••••" value={user.password} onFocus={() => setActiveField("password")} onBlur={() => setActiveField(null)} onChange={(e) => { setUser({ ...user, password: e.target.value }); setError(""); }} />
+      <button className="auth-submit" type="submit" disabled={!isFormValid || loading}>{loading ? "Planting your seed…" : "Create my den"}<span>→</span></button>
+    </form>
+  </AuthCard>;
 }

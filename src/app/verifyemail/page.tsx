@@ -10,21 +10,18 @@ export default function VerifyEmailPage() {
   const token = searchParams.get("token");
 
   const [verified, setVerified] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(
+    token ? null : "Verification token is missing.",
+  );
+  const [loading, setLoading] = useState(Boolean(token));
 
   useEffect(() => {
     if (!token) {
-      setError("Verification token is missing.");
-      setLoading(false);
       return;
     }
 
     const verifyUserEmail = async () => {
       try {
-        setLoading(true);
-        setError(null);
-
         await axios.post("/api/users/verifyemail", { token });
 
         setVerified(true);
